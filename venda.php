@@ -5,10 +5,10 @@ include 'db.php';
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Coleta os dados do formulário
-    $comprador_id = $_POST['comprador_id'];
-    $itens_venda = $_POST['itens_venda'];
+    if (ctype_digit($comprador_id = $_POST['comprador_id']) &&
+        ctype_digit($itens_venda = $_POST['itens_venda'])) {
 
-    $sql = "INSERT INTO venda (comprador_id, itens_venda)
+            $sql = "INSERT INTO venda (comprador_id, itens_venda)
             VALUES (:comprador_id, :itens_venda)";
     
     $stmt = $conn->prepare($sql);
@@ -21,6 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Redireciona para a página de pedidos
     header('Location: venda.php');
     exit;
+
+        } else {
+        echo "O formato está inválido.";
+    }
+
+    
 }
 ?>
 

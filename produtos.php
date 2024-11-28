@@ -5,26 +5,29 @@ include 'db.php';
 // Verifica se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Coleta os dados do formulário
-    $venda_id = $_POST['venda_id'];
-    $produto_id = $_POST['produto_id'];
-    $quantidade = $_POST['quantidade'];
-    $subtotal = $_POST['subtotal'];
+    if (ctype_digit($venda_id = $_POST['venda_id']) &&
+        ctype_digit($produto_id = $_POST['produto_id']) &&
+        ctype_digit($quantidade = $_POST['quantidade']) &&
+        ctype_digit($subtotal = $_POST['subtotal'])) {
 
-    // Insere os dados no banco de dados
-    $sql = "INSERT INTO itemVenda (venda_id, produto_id, quantidade, subtotal)
-            VALUES (:venda_id, :produto_id, :quantidade, :subtotal)";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':venda_id', $venda_id);
-    $stmt->bindParam(':produto_id', $produto_id);
-    $stmt->bindParam(':quantidade', $quantidade);
-    $stmt->bindParam(':subtotal', $subtotal);
+        // Insere os dados no banco de dados
+        $sql = "INSERT INTO itemVenda (venda_id, produto_id, quantidade, subtotal)
+                VALUES (:venda_id, :produto_id, :quantidade, :subtotal)";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':venda_id', $venda_id);
+        $stmt->bindParam(':produto_id', $produto_id);
+        $stmt->bindParam(':quantidade', $quantidade);
+        $stmt->bindParam(':subtotal', $subtotal);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    // Redireciona para a página de pedidos
-    header('Location: produtos.php');
-    exit;
+        // Redireciona para a página de pedidos
+        header('Location: produtos.php');
+        exit;
+    } else {
+        echo "O formato está inválido.";
+    }
 }
 ?>
 

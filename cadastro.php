@@ -8,19 +8,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome_cliente = $_POST['comprador_nome'];
     $telefone_cliente = $_POST['comprador_telefone'];
 
-    // Insere os dados no banco de dados
-    $sql = "INSERT INTO comprador (comprador_nome, comprador_telefone)
-            VALUES (:comprador_nome, :comprador_telefone)";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':comprador_nome', $nome_cliente);
-    $stmt->bindParam(':comprador_telefone', $telefone_cliente);
+    if (ctype_digit($telefone_cliente)) {
+        // Insere os dados no banco de dados
+        $sql = "INSERT INTO comprador (comprador_nome, comprador_telefone)
+                VALUES (:comprador_nome, :comprador_telefone)";
+        
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':comprador_nome', $nome_cliente);
+        $stmt->bindParam(':comprador_telefone', $telefone_cliente);
 
-    $stmt->execute();
+        $stmt->execute();
 
-    // Redireciona para a página de pedidos
-    header('Location: cadastro.php');
-    exit;
+        // Redireciona para a página de pedidos
+        header('Location: cadastro.php');
+        exit;
+    } else {
+        echo "O formato do telefone está inválido.";
+    }
 }
 ?>
 
