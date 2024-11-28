@@ -35,12 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <!-- Menu de Navegação -->
     <nav>
-        <a href="index.php">Registrar Pedido</a>
-        <a href="pedidos.php">Visualizar Pedidos</a>
-        <a href="cadastro.php">Cadastrar Cliente</a>
+        <a href="venda.php">Cadastrar venda</a>
+        <a href="produto.php">Cadastrar produto</a>
     </nav>
 
-    <h1>Cadastro de Cliente</h1>
+    <h1>Cadastro de comprador</h1>
     <form action="cadastro.php" method="POST">
         <label for="comprador_nome">Nome do comprador:</label>
         <input type="text" id="comprador_nome" name="comprador_nome" required><br>
